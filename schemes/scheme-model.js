@@ -1,65 +1,57 @@
-const db = require('../data/db-config.js');
+const db = require("../data/db-config.js");
 
-
-function find(){
-    return db('schemes')
+function find() {
+  return db("schemes");
 }
 
 function findById(id) {
-    return db('schemes')
-    .where({id})
-    .first()
+  return db("schemes").where({ id }).first();
 }
 
 function findSteps(id) {
-   return db('schemes as sc')
-   .join('steps as s', 'sc.id', 's.scheme_id')
-   .select('s.id','sc.scheme_name','s.step_number', 's.instructions' )
-   .where('s.scheme_id',id)
+  return db("schemes as sc")
+    .join("steps as s", "sc.id", "s.scheme_id")
+    .select("s.id", "sc.scheme_name", "s.step_number", "s.instructions")
+    .where("s.scheme_id", id);
 }
 
-function add(schemeData){
-    return db('schemes')
+function add(schemeData) {
+  return db("schemes")
     .insert(schemeData)
-    .then(schemeData => {
-      console.log('add',schemeData)
-        return findById(schemeData[0])
-    })
+    .then((schemeData) => {
+      console.log("add", schemeData);
+      return findById(schemeData[0]);
+    });
 }
 
-function update(schemeData,id){
-    return db('schemes')
-    .where({id})
+function update(schemeData, id) {
+  return db("schemes")
+    .where({ id })
     .first()
     .update(schemeData)
     .then(() => {
-        console.log('update',schemeData)
-        return findById(id)
-    })
+      console.log("update", schemeData);
+      return findById(id);
+    });
 }
 
-function remove(id){
-  
-        return  findById(id)
-        .then(removedSchema => {
-           return  db("schemes").where({id}).first().del() 
-           .then(() => {return removedSchema})
-            })
-         
-        
-        
-        
-       
-         
-    }
-
-
+function remove(id) {
+  return findById(id).then((removedSchema) => {
+    return db("schemes")
+      .where({ id })
+      .first()
+      .del()
+      .then(() => {
+        return removedSchema;
+      });
+  });
+}
 
 module.exports = {
-    find,
-    findById,
-    findSteps,
-    add,
-    update,
-    remove
+  find,
+  findById,
+  findSteps,
+  add,
+  update,
+  remove,
 };
