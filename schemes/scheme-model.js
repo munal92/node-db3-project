@@ -47,6 +47,8 @@ function remove(id) {
   });
 }
 
+
+
 module.exports = {
   find,
   findById,
@@ -54,4 +56,5 @@ module.exports = {
   add,
   update,
   remove,
+  addStep,
 };
