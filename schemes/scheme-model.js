@@ -47,6 +47,9 @@ function remove(id) {
   });
 }
 
+function addSteps(stepData){
+  return db('steps').insert(stepData)
+}
 
 
 module.exports = {
@@ -56,5 +59,5 @@ module.exports = {
   add,
   update,
   remove,
-  addStep,
+  addSteps
 };
